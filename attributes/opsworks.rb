@@ -1,0 +1,1 @@
+default['couchbase']['opsworks']['clusters'] = []
