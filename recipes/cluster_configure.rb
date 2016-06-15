@@ -3,6 +3,8 @@
 # Recipe:: cluster_configure
 #
 
+username     = node['couchbase']['username']
+password     = node['couchbase']['password']
 install_path = node['couchbase']['server']['paths']['root']
 
 unless node[:couchbase][:cluster][:ip].nil?
