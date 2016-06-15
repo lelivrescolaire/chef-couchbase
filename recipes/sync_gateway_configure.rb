@@ -17,6 +17,13 @@ service "#{service_name}" do
   action   :nothing
 end
 
+directory "#{install_dir}/etc" do
+  owner     'couchbase'
+  group     'couchbase'
+  mode      0755
+  recursive true
+end
+
 template "#{install_dir}/etc/config.json" do
     source    'sync_gateway.config_json.erb'
     variables :config => Chef::JSONCompat.to_json_pretty(config)
