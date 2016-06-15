@@ -3,7 +3,7 @@
 # Recipe:: cluster_configure
 #
 
-install_path = default['couchbase']['server']['paths']['root']
+install_path = node['couchbase']['server']['paths']['root']
 
 unless remote_ip_address.nil?
     Chef::Log.info "Using node '#{remote_ip_address}' as cluster master."
