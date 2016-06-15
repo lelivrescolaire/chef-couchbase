@@ -13,7 +13,7 @@ def command(action, ip="127.0.0.1")
 end
 
 action :install do
-    arch         = node['kernel']['machine']
+    arch         = "amd64" #node['kernel']['machine']
     os_version   = "#{node[:platform]}#{node[:platform_version]}"
 
     package_file = "couchbase-server-#{new_resource.edition}_#{new_resource.version}-#{os_version}_#{arch}.deb"
