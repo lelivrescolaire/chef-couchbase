@@ -8,7 +8,7 @@ install_path = default['couchbase']['server']['paths']['root']
 unless remote_ip_address.nil?
     Chef::Log.info "Using node '#{remote_ip_address}' as cluster master."
 
-    couchbase_cluster "#{cluster_name}" do
+    couchbase_cluster "default" do
         ip           node['ipaddress']
         cluster_ip   node['couchbase']['cluster']['ip']
         username     username
@@ -21,7 +21,7 @@ unless remote_ip_address.nil?
 else
     Chef::Log.info "Initializing a new cluster as no cluster were provided."
 
-    couchbase_cluster "#{cluster_name}" do
+    couchbase_cluster "default" do
         username      username
         password      password
         ramsize       node['couchbase']['cluster']['ramsize']['cluster']
