@@ -29,7 +29,7 @@ action :install do
         action :create_if_missing
     end
 
-    dpkg_package package
+    dpkg_package package_path
 end
 
 action :setup do
