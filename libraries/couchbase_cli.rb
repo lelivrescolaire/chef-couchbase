@@ -9,7 +9,7 @@ end
 # -------------------------------------------------
 
 def couchbase_cli_cluster(cmd, ip, port, username, password)
-  cmd = "#{cmd} --cluster=#{ip}"
+  cmd = "#{cmd} -c #{ip}"
   cmd = "#{cmd}:#{port}" unless port.nil?
   cmd = couchbase_cli_username(cmd, username) unless username.nil?
   cmd = couchbase_cli_password(cmd, password) unless password.nil?
@@ -18,13 +18,13 @@ def couchbase_cli_cluster(cmd, ip, port, username, password)
 end
 
 def couchbase_cli_username(cmd, username)
-  cmd = "#{cmd} --username=#{username}" unless username.nil?
+  cmd = "#{cmd} -u #{username}" unless username.nil?
 
   return cmd
 end
 
 def couchbase_cli_password(cmd, password)
-  cmd = "#{cmd} --password=#{password}" unless password.nil?
+  cmd = "#{cmd} -p #{password}" unless password.nil?
 
   return cmd
 end
