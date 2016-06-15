@@ -5,6 +5,7 @@
 
 username      = node['couchbase']['username']
 password      = node['couchbase']['password']
+port          = node['couchbase']['port']
 clusters      = node['couchbase']['opsworks']['clusters']
 
 layers        = node['opsworks']['layers']
@@ -36,7 +37,7 @@ unless cluster_layers.empty?
             Chef::Log.info "Instance '#{k}'(#{i[:private_ip]}) is 'online'"
         end
 
-        if check_cluster(username, password, i['private_ip'])
+        if check_cluster(username, password, "#{i[:private_ip]}:#{port}")
             Chef::Log.info "Instance '#{k}'(#{i[:private_ip]}) is a cluster"
         end
     end
