@@ -5,7 +5,7 @@
 
 install_path = node['couchbase']['server']['paths']['root']
 
-unless remote_ip_address.nil?
+unless node[:couchbase][:cluster][:ip].nil?
     Chef::Log.info "Using node '#{node[:couchbase][:cluster][:ip]}' as cluster master."
 
     couchbase_cluster "default" do
