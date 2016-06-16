@@ -9,7 +9,7 @@ username     = node['couchbase']['username']
 password     = node['couchbase']['password']
 install_path = node['couchbase']['server']['paths']['root']
 
-couchbase_cluster "#{cluster_name}" do
+couchbase_cluster "default" do
     ip           node['ipaddress']
     port         node['couchbase']['port']
     username     node['couchbase']['username']

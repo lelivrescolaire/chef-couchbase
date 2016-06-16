@@ -25,7 +25,7 @@ def check_bucket(username, password, bucket)
 end
 
 def get_node_info(username, password, ipaddress)
-  uri = URI("http://#{ipaddress}:8091/pools/default")
+  uri = URI("http://#{ipaddress}/pools/default")
   check = Net::HTTP::Get.new(uri)
   check.basic_auth username, password
   res = Net::HTTP.start(uri.hostname, uri.port, :open_timeout => 10) { |http| http.request(check) }
@@ -43,7 +43,7 @@ def check_in_cluster(username, password, ipaddress)
 end
 
 def get_replica_json(username, password, ipaddress)
-  uri = URI("http://#{ipaddress}:8091/pools/default/remoteClusters")
+  uri = URI("http://#{ipaddress}/pools/default/remoteClusters")
   check = Net::HTTP::Get.new(uri)
   check.basic_auth username, password
   res = Net::HTTP.start(uri.hostname, uri.port, :open_timeout => 10) { |http| http.request(check) }
@@ -62,7 +62,7 @@ def check_replication(username, password, ipaddress, replica_name)
 end
 
 def check_bucket_replication(username, password, ipaddress, install_path, bucket)
-  output = Mixlib::ShellOut.new("#{install_path}/bin/couchbase-cli xdcr-replicate -c #{ipaddress}:8091 -u #{username} -p #{password} --list | grep source")
+  output = Mixlib::ShellOut.new("#{install_path}/bin/couchbase-cli xdcr-replicate -c #{ipaddress} -u #{username} -p #{password} --list | grep source")
   output.run_command
   output.each_line do |line|
     bucket_name = line.sub(/\s+/, '').sub(/\t/, '').sub(/\n/, '').split(':')
@@ -72,7 +72,7 @@ def check_bucket_replication(username, password, ipaddress, install_path, bucket
 end
 
 def check_for_bucket_replication(username, password, ipaddress, install_path)
-  output = Mixlib::ShellOut("#{install_path}/bin/couchbase-cli xdcr-replicate -c #{ipaddress}:8091 -u #{username} -p #{password} --list")
+  output = Mixlib::ShellOut("#{install_path}/bin/couchbase-cli xdcr-replicate -c #{ipaddress} -u #{username} -p #{password} --list")
   output.run_command
   return true if output.length > 1
   false
