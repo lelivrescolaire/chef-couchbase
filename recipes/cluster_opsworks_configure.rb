@@ -44,7 +44,7 @@ unless cluster_layers.empty?
 
     instances_on  = instances.select{|k, i|
                         Chef::Log.info "Filtering '#{i[:private_ip]}'"
-                        i['private_ip'] != local_ip_address && i['status'] == 'online' && check_cluster(username, password, i['private_ip'])
+                        i['private_ip'] != local_ip_address && i['status'] == 'online' && check_cluster(username, password, "#{i[:private_ip]}:#{port}")
                     }
 
     instances_on = instances_on.values
