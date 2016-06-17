@@ -7,6 +7,8 @@ version      = node['couchbase']['sync_gateway']['version']
 edition      = node['couchbase']['sync_gateway']['edition']
 release_id   = node['couchbase']['sync_gateway']['release_id']
 service_name = node['couchbase']['sync_gateway']['service']
+install_dir  = node['couchbase']['sync_gateway']['paths']['root']
+log_dir      = node['couchbase']['sync_gateway']['paths']['logs']
 
 couchbase_sync_gateway 'self' do
     version    version
@@ -30,14 +32,21 @@ template "/etc/init.d/#{service_name}" do
     notifies :restart, "service[#{service_name}]", :immediately
 end
 
-directory "#{node[:couchbase][:sync_gateway][:paths][:root]}/etc" do
+directory "#{install_dir}/etc" do
   owner 'couchbase'
   group 'couchbase'
   mode 0755
   recursive true
 end
 
-directory "#{node[:couchbase][:sync_gateway][:paths][:logs]}" do
+directory "#{install_dir}/var" do
+  owner 'couchbase'
+  group 'couchbase'
+  mode 0755
+  recursive true
+end
+
+directory "#{log_dir}" do
   owner 'couchbase'
   group 'couchbase'
   mode 0755
