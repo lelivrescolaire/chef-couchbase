@@ -22,7 +22,7 @@ service "#{service_name}" do
   action   :nothing
 end
 
-template "/etc/init.d/#{service_name}" do
+template "/etc/init/#{service_name}.conf " do
     source   'sync_gateway.init.d.erb'
     owner    "root"
     group    "root"
