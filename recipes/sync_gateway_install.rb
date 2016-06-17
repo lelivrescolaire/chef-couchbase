@@ -25,7 +25,7 @@ template "/etc/init.d/#{service_name}" do
     owner    "root"
     group    "root"
     mode     "0755"
-    action   :create_if_missing
+    action   :create
     notifies :enable, "service[#{service_name}]", :immediately
     notifies :restart, "service[#{service_name}]", :immediately
 end
