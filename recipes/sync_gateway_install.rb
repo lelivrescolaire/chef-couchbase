@@ -30,7 +30,14 @@ template "/etc/init.d/#{service_name}" do
     notifies :restart, "service[#{service_name}]", :immediately
 end
 
-directory "#{node[:couchbase][:sync_gateway][:install_dir]}/etc" do
+directory "#{node[:couchbase][:sync_gateway][:paths][:root]}/etc" do
+  owner 'couchbase'
+  group 'couchbase'
+  mode 0755
+  recursive true
+end
+
+directory "#{node[:couchbase][:sync_gateway][:paths][:logs]}" do
   owner 'couchbase'
   group 'couchbase'
   mode 0755
