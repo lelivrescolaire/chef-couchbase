@@ -12,11 +12,11 @@ fi
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-DAEMON_PATH=<%= node['couchbase']['sync_gateway']['install_dir'] %>/bin/
+DAEMON_PATH=<%= default['couchbase']['sync_gateway']['paths']['root'] %>/bin/
 DAEMON=sync_gateway
-DAEMONOPTS=<%= node['couchbase']['sync_gateway']['install_dir'] %>/etc/config.json
-LOGFILE=<%= node['couchbase']['sync_gateway']['log_dir'] %>/sync_gateway.log
-PIDFILE=<%= node['couchbase']['sync_gateway']['install_dir'] %>/var/lib/couchbase/couchbase-sync-gateway.pid
+DAEMONOPTS=<%= default['couchbase']['sync_gateway']['paths']['root'] %>/etc/config.json
+LOGFILE=<%= default['couchbase']['sync_gateway']['paths']['logs'] %>/sync_gateway.log
+PIDFILE=<%= default['couchbase']['sync_gateway']['paths']['root'] %>/var/couchbase-sync-gateway.pid
 
 NAME=couchbase-sync-gateway
 DESC="Couchbase sync_gateway"
