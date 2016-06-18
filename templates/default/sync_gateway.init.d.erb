@@ -9,7 +9,7 @@ description "Sync Gateway Upstart Script"
 version "0.1.0"
 author "Andrew Reslan"
 
-# Upstart env vars 
+# Upstart env vars
 env RUNAS=<%= node['couchbase']['sync_gateway']['service'] %>
 env RUNBASE=<%= node['couchbase']['sync_gateway']['paths']['root'] %>
 env PIDFILE=<%= node['couchbase']['sync_gateway']['paths']['root'] %>/<%= node['couchbase']['sync_gateway']['service'] %>.pid
