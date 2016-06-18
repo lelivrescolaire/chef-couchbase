@@ -17,6 +17,11 @@ couchbase_sync_gateway 'self' do
     action     :install
 end
 
+service "sync_gateway" do
+  supports :restart => true, :start => true, :stop => true, :reload => true
+  action   :disable
+end
+
 service "#{service_name}" do
   supports :restart => true, :start => true, :stop => true, :reload => true
   action   :nothing
