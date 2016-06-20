@@ -12,6 +12,22 @@ def command(action, ip="127.0.0.1")
   return cmd
 end
 
+def init_or_edit
+  action = 'cluster-init'
+  action = 'cluster-edit' if check_cluster(new_resource.username, new_resource.password, "127.0.0.1:#{new_resource.port}")
+
+  cmd = command(action)
+  cmd = couchbase_cli_cluster_username(cmd, new_resource.username)
+  cmd = couchbase_cli_cluster_password(cmd, new_resource.password)
+  cmd = couchbase_cli_cluster_ramsize(cmd, new_resource.ramsize)
+  cmd = couchbase_cli_cluster_index_ramsize(cmd, new_resource.index_ramsize)
+  cmd = couchbase_cli_services(cmd, new_resource.services)
+
+  execute "set cluster configuration #{cmd}" do
+    command cmd
+  end
+end
+
 action :rebalance do
   if check_in_cluster(new_resource.username, new_resource.password, "#{new_resource.cluster_ip}:#{new_resource.port}")
 
@@ -24,16 +40,11 @@ action :rebalance do
 end
 
 action :init do
-  cmd = command('cluster-init')
-  cmd = couchbase_cli_cluster_username(cmd, new_resource.username)
-  cmd = couchbase_cli_cluster_password(cmd, new_resource.password)
-  cmd = couchbase_cli_cluster_ramsize(cmd, new_resource.ramsize)
-  cmd = couchbase_cli_cluster_index_ramsize(cmd, new_resource.index_ramsize)
-  cmd = couchbase_cli_services(cmd, new_resource.services)
+    init_or_edit
+end
 
-  execute "cluster init to initialize server with #{cmd}" do
-    command cmd
-  end
+action :edit do
+    init_or_edit
 end
 
 action :join do
