@@ -17,7 +17,7 @@ def create_or_edit(allowEdit = true)
   action = 'bucket-create'
   action = 'bucket-edit'   if check_bucket(new_resource.cluster_username, new_resource.cluster_password, new_resource.name)
 
-  if (action != 'bucket-edit' || allowEdit) do
+  if (action != 'bucket-edit' || allowEdit)
     cmd = command(action, new_resource.install_path)
     cmd = couchbase_cli_bucket_eviction_policy(cmd, new_resource.eviction)
     cmd = couchbase_cli_bucket_type(cmd, new_resource.type)
