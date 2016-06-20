@@ -12,14 +12,14 @@ node['couchbase']['bucket'].each do |key, config|
         priority         config['priority']
         password         config['password']
         eviction_policy  config['eviction_policy']
-        port             node['couchbase']['port']
+        port             config['port']
         flush            config['flush']
         index_replica    config['index_replica']
         priority         config['priority']
         install_path     node['couchbase']['server']['paths']['root']
         cluster_username node['couchbase']['username']
         cluster_password node['couchbase']['password']
-        cluster_port     config['cluster_port']
+        cluster_port     node['couchbase']['port']
         action :create
     end
 end
