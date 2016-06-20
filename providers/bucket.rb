@@ -40,7 +40,7 @@ action :create do
 end
 
 action :create_if_not_exists do
-    unless check_bucket(new_resource.cluster_username, new_resource.cluster_password, new_resource.name) do
+    unless check_bucket(new_resource.cluster_username, new_resource.cluster_password, new_resource.name)
         create_or_edit
     end
 end
