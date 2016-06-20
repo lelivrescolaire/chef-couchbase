@@ -19,7 +19,7 @@ def create_or_edit(allowEdit = true)
 
   if (action != 'bucket-edit' || allowEdit)
     cmd = command(action)
-    cmd = couchbase_cli_bucket_eviction_policy(cmd, new_resource.eviction)
+    cmd = couchbase_cli_bucket_eviction_policy(cmd, new_resource.eviction_policy)
     cmd = couchbase_cli_bucket_type(cmd, new_resource.type)
     cmd = couchbase_cli_bucket_port(cmd, new_resource.port)
     cmd = couchbase_cli_bucket_ramsize(cmd, new_resource.ramsize) unless new_resource.ramsize.nil?
