@@ -13,32 +13,36 @@ def command(action)
   return cmd
 end
 
-def init_or_create
+def create_or_edit(allowEdit = true)
   action = 'bucket-create'
   action = 'bucket-edit'   if check_bucket(new_resource.cluster_username, new_resource.cluster_password, new_resource.name)
 
-  cmd = command(action, new_resource.install_path)
-  cmd = couchbase_cli_bucket_eviction_policy(cmd, new_resource.eviction)
-  cmd = couchbase_cli_bucket_type(cmd, new_resource.type)
-  cmd = couchbase_cli_bucket_port(cmd, new_resource.port)
-  cmd = couchbase_cli_bucket_ramsize(cmd, new_resource.ramsize)
-  cmd = couchbase_cli_bucket_priority(cmd, new_resource.priority)
-  cmd = couchbase_cli_bucket_replica(cmd, new_resource.replica)
-  cmd = couchbase_cli_enable_flush(cmd, new_resource.bucket_flush)
-  cmd = couchbase_cli_bucket_password(cmd, new_resource.password)
-  cmd = couchbase_cli_enable_index_replica(cmd, new_resource.index_replica)
+  if (action != 'bucket-edit' || allowEdit) do
+    cmd = command(action, new_resource.install_path)
+    cmd = couchbase_cli_bucket_eviction_policy(cmd, new_resource.eviction)
+    cmd = couchbase_cli_bucket_type(cmd, new_resource.type)
+    cmd = couchbase_cli_bucket_port(cmd, new_resource.port)
+    cmd = couchbase_cli_bucket_ramsize(cmd, new_resource.ramsize) unless new_resource.ramsize.nil?
+    cmd = couchbase_cli_bucket_priority(cmd, new_resource.priority)
+    cmd = couchbase_cli_bucket_replica(cmd, new_resource.replica)
+    cmd = couchbase_cli_enable_flush(cmd, new_resource.bucket_flush)
+    cmd = couchbase_cli_bucket_password(cmd, new_resource.password)
+    cmd = couchbase_cli_enable_index_replica(cmd, new_resource.index_replica)
 
-  execute "executing #{action}" do
-    command cmd
+    execute "executing #{action}" do
+      command cmd
+    end
   end
 end
 
-action :edit do
-  init_or_create
+action :create do
+  create_or_edit
 end
 
-action :create do
-  init_or_create
+action :create_if_not_exists do
+    unless check_bucket(new_resource.cluster_username, new_resource.cluster_password, new_resource.name) do
+        create_or_edit
+    end
 end
 
 action :delete do
