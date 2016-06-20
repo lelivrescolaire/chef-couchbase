@@ -163,7 +163,7 @@ def couchbase_cli_enable_flush(cmd, enable=true)
   return cmd
 end
 
-def couchbase_cli_enable_index_recplica(cmd, enable=true)
+def couchbase_cli_enable_index_replica(cmd, enable=true)
   cmd = "#{cmd} --enable-index-replica=1" if enable
 
   return cmd
