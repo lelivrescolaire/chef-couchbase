@@ -8,7 +8,7 @@ use_inline_resources
 def command(action)
   cmd = couchbase_cli_command(action, new_resource.install_path)
   cmd = couchbase_cli_cluster(cmd, '127.0.0.1', new_resource.cluster_port, new_resource.cluster_username, new_resource.cluster_password)
-  cmd = couchbase_cil_bucket(cmd, new_resource.name)
+  cmd = couchbase_cli_bucket(cmd, new_resource.name)
 
   return cmd
 end
