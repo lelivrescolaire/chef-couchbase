@@ -25,7 +25,7 @@ def create_or_edit(allowEdit = true)
     cmd = couchbase_cli_bucket_ramsize(cmd, new_resource.ramsize) unless new_resource.ramsize.nil?
     cmd = couchbase_cli_bucket_priority(cmd, new_resource.priority)
     cmd = couchbase_cli_bucket_replica(cmd, new_resource.replica)
-    cmd = couchbase_cli_enable_flush(cmd, new_resource.bucket_flush)
+    cmd = couchbase_cli_enable_flush(cmd, new_resource.flush)
     cmd = couchbase_cli_bucket_password(cmd, new_resource.password)
     cmd = couchbase_cli_enable_index_replica(cmd, new_resource.index_replica)
 
