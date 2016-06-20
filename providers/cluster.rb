@@ -24,17 +24,15 @@ action :rebalance do
 end
 
 action :init do
-  unless check_cluster(new_resource.username, new_resource.password, "127.0.0.1:#{new_resource.port}")
-    cmd = command('cluster-init')
-    cmd = couchbase_cli_cluster_username(cmd, new_resource.username)
-    cmd = couchbase_cli_cluster_password(cmd, new_resource.password)
-    cmd = couchbase_cli_cluster_ramsize(cmd, new_resource.ramsize)
-    cmd = couchbase_cli_cluster_index_ramsize(cmd, new_resource.index_ramsize)
-    cmd = couchbase_cli_services(cmd, new_resource.services)
+  cmd = command('cluster-init')
+  cmd = couchbase_cli_cluster_username(cmd, new_resource.username)
+  cmd = couchbase_cli_cluster_password(cmd, new_resource.password)
+  cmd = couchbase_cli_cluster_ramsize(cmd, new_resource.ramsize)
+  cmd = couchbase_cli_cluster_index_ramsize(cmd, new_resource.index_ramsize)
+  cmd = couchbase_cli_services(cmd, new_resource.services)
 
-    execute "cluster init to initialize server with #{cmd}" do
-      command cmd
-    end
+  execute "cluster init to initialize server with #{cmd}" do
+    command cmd
   end
 end
 

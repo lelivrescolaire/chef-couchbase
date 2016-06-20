@@ -33,7 +33,7 @@ action :install do
 end
 
 action :setup do
-  if check_cluster(new_resource.username, new_resource.password) == false
+  unless check_cluster(new_resource.username, new_resource.password)
     cmd = command('node-init')
     cmd = couchbase_cli_node_init_data_path(cmd, new_resource.data_path)
     cmd = couchbase_cli_node_init_index_path(cmd, new_resource.index_path)
