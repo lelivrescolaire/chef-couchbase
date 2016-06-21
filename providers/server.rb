@@ -38,7 +38,7 @@ action :setup do
     cmd = couchbase_cli_node_init_data_path(cmd, new_resource.data_path)
     cmd = couchbase_cli_node_init_index_path(cmd, new_resource.index_path)
 
-    execute 'setting up server with #{cmd}' do
+    execute "setting up server with #{cmd}" do
       command cmd
     end
   end
