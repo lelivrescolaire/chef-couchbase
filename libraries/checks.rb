@@ -39,6 +39,7 @@ def get_node_info(username, password, ip = '127.0.0.1:8091', port = nil)
   check = Net::HTTP::Get.new(uri)
   check.basic_auth username, password
   res = Net::HTTP.start(uri.hostname, uri.port, :open_timeout => 10) { |http| http.request(check) }
+  Chef::Log.warn("res code is #{res.code}")
   return unless res.code == '200'
   JSON.parse(res.body)
 end
