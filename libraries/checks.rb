@@ -44,13 +44,15 @@ def get_node_info(username, password, ip = '127.0.0.1:8091', port = nil)
   JSON.parse(res.body)
 end
 
-def check_in_cluster(username, password, ip , port = nil)
-  infos = get_node_info(username, password)
+def check_in_cluster(username, password, ip, cluster_ip, port = nil)
+  infos = get_node_info(username, password, cluster_ip, port)
+
+  return false unless infos.nil?
 
   hostname = "#{ip}";
   hostname = "#{hostname}:#{port}" unless port.nil?
 
-  i = infos['nodes'].index { |node| node.hostname == hostname }
+  i = infos['nodes'].index { |node| node["hostname"] == hostname }
 
   i.nil?
 end

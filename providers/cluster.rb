@@ -47,7 +47,7 @@ end
 action :join do
   Chef::Log.info "Trying to join cluster #{new_resource.cluster_ip}"
 
-  unless check_in_cluster(new_resource.username, new_resource.password, new_resource.cluster_ip, new_resource.port)
+  unless check_in_cluster(new_resource.username, new_resource.password, new_resource.ip, new_resource.cluster_ip, new_resource.port)
     unless new_resource.ip == new_resource.cluster_ip
       Chef::Log.info "#{new_resource.cluster_ip} is not the current instance"
 
