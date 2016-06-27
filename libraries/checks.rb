@@ -52,7 +52,15 @@ def check_in_cluster(username, password, ip, cluster_ip, port = nil)
   hostname = "#{ip}";
   hostname = "#{hostname}:#{port}" unless port.nil?
 
+  Chef::Log.info("Looking for node #{hostname} in the cluster")
+
   i = infos['nodes'].index { |node| node["hostname"] == hostname }
 
-  i.nil?
+  Chef::Log.info("Node index is #{i}")
+
+  unless i.nil?
+    return true
+  end
+
+  return false
 end

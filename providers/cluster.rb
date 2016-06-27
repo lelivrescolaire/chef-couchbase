@@ -57,6 +57,7 @@ action :join do
 
       execute "joining to cluster with #{cmd}" do
         command cmd
+        ignore_failure true
       end
     end
   else
