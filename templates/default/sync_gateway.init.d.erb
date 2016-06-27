@@ -22,6 +22,7 @@ env NAME=<%= node['couchbase']['sync_gateway']['service'] %>
 start on runlevel [2345]
 stop on shutdown
 respawn
+respawn limit 10 180
 
 pre-start script
   mkdir -p $LOGS
@@ -30,5 +31,7 @@ pre-start script
   mkdir -p ${RUNBASE}/data
   chown -R ${RUNAS}:${RUNAS} ${RUNBASE}/data
 end script
+
+post-stop exec sleep 15 # Wait couchbase tou be UP on start
 
 exec start-stop-daemon --start --chuid $RUNAS --chdir $RUNBASE --make-pidfile --pidfile $PIDFILE --startas $GATEWAY -- $CONFIG >> ${LOGS}/${NAME}_access.log 2>> ${LOGS}/${NAME}_error.log
