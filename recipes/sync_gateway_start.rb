@@ -6,7 +6,7 @@
 service_name = node['couchbase']['sync_gateway']['service']
 
 service "#{service_name}" do
-  provider Chef::Provider::Service::Init
+  provider Chef::Provider::Service::Upstart
   supports :restart => true, :start => true, :stop => true, :reload => true
   action   :start
 end

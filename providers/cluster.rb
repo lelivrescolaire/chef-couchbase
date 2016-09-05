@@ -86,11 +86,11 @@ action :leave do
       cmdRebalance = command('rebalance', node["hostname"], nil)
       cmdRebalance = couchbase_cli_server_remove(cmdRebalance, new_resource.ip, new_resource.port)
 
-      execute "failing over server with #{cmd}" do
+      execute "failing over server with #{cmdFailover}" do
         command cmdFailover
       end
 
-      execute "leaving cluster with #{cmd}" do
+      execute "leaving cluster with #{cmdRebalance}" do
         command cmdRebalance
       end
     end

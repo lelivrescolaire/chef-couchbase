@@ -18,13 +18,13 @@ couchbase_sync_gateway 'self' do
 end
 
 service "sync_gateway" do
-  provider Chef::Provider::Service::Init
+  provider Chef::Provider::Service::Upstart
   supports :restart => true, :start => true, :stop => true, :reload => true
   action   :disable
 end
 
 service "#{service_name}" do
-  provider Chef::Provider::Service::Init
+  provider Chef::Provider::Service::Upstart
   supports :restart => true, :start => true, :stop => true, :reload => true
   action   :nothing
 end
