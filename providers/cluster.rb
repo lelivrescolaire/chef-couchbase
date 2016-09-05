@@ -5,9 +5,9 @@
 
 use_inline_resources
 
-def command(action, ip="127.0.0.1")
+def command(action, ip="127.0.0.1", port=8091)
   cmd = couchbase_cli_command(action, new_resource.install_path)
-  cmd = couchbase_cli_cluster(cmd, ip, new_resource.port, new_resource.username, new_resource.password)
+  cmd = couchbase_cli_cluster(cmd, ip, port, new_resource.username, new_resource.password)
 
   return cmd
 end
@@ -80,7 +80,7 @@ action :leave do
     node = infos['nodes'].bsearch { |n| !n["thisNode"] }
 
     if !node.nil?
-      cmd = command('rebalance', node["hostname"])
+      cmd = command('rebalance', node["hostname"], nil)
       cmd = couchbase_cli_server_remove(cmd, new_resource.ip, new_resource.port)
 
       execute "leaving cluster with #{cmd}" do
