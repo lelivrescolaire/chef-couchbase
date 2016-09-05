@@ -105,6 +105,13 @@ def couchbase_cli_server_remove(cmd, ip, port)
   return cmd
 end
 
+def couchbase_cli_server_failover(cmd, ip, port)
+  cmd = "#{cmd} --server-failover=#{ip}"
+  cmd = "#{cmd}:#{port}" unless port.nil?
+
+  return cmd
+end
+
 # -------------------------------------------------
 # Bucket
 # -------------------------------------------------

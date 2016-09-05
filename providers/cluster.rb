@@ -80,11 +80,18 @@ action :leave do
     node = infos['nodes'].bsearch { |n| !n["thisNode"] }
 
     if !node.nil?
-      cmd = command('rebalance', node["hostname"], nil)
-      cmd = couchbase_cli_server_remove(cmd, new_resource.ip, new_resource.port)
+      cmdFailover = command('failover', node["hostname"], nil)
+      cmdFailover = couchbase_cli_server_failover(cmdFailover, new_resource.ip, new_resource.port)
+
+      cmdRebalance = command('rebalance', node["hostname"], nil)
+      cmdRebalance = couchbase_cli_server_remove(cmdRebalance, new_resource.ip, new_resource.port)
+
+      execute "failing over server with #{cmd}" do
+        command cmdFailover
+      end
 
       execute "leaving cluster with #{cmd}" do
-        command cmd
+        command cmdRebalance
       end
     end
   end
