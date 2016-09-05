@@ -35,8 +35,6 @@ template "/etc/init/#{service_name}.conf" do
     group    "root"
     mode     "0644"
     action   :create
-    notifies :enable, "service[#{service_name}]", :immediately
-    notifies :restart, "service[#{service_name}]", :immediately
 end
 
 directory "#{install_dir}/etc" do

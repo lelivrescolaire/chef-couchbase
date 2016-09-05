@@ -75,7 +75,11 @@ end
 
 action :leave do
   if check_cluster(new_resource.username, new_resource.password, "127.0.0.1:#{new_resource.port}")
-    cmd = command('rebalance', "127.0.0.1")
+    infos = get_node_info(new_resource.username, new_resource.password, "127.0.0.1", new_resource.port)
+
+    node = infos['nodes'].bsearch { |n| !n.thisNode? }
+
+    cmd = command('rebalance', node.hostname)
     cmd = couchbase_cli_server_remove(cmd, new_resource.ip, new_resource.port)
 
     execute "leaving cluster with #{cmd}" do
