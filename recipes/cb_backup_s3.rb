@@ -1,9 +1,9 @@
 unless node['couchbase']['backup']['s3']['bucket_name'].nil? || node['couchbase']['backup']['s3']['region'].nil?
-    file = "/tmp/$(date +%Y-%m-%d_%H-%M)"
+    file = "/tmp/$(date +\%Y-\%m-\%d_\%H-\%M)"
 
     cbBackupCommand = "#{node[:couchbase][:server][:paths][:root]}/bin/cbbackup -u #{node[:couchbase][:username]} -p #{node[:couchbase][:password]} --single-node"
     cbBackupCommand = "#{cbBackupCommand} http://localhost:#{node[:couchbase][:port]}"
-    cbBackupCommand = "#{cbBackupCommand} /tmp/$(date +%Y-%m-%d_%H-%M)"
+    cbBackupCommand = "#{cbBackupCommand} #{file}"
 
     zipCommand = "zip -r #{file}.zip #{file}"
 
