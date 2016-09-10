@@ -20,13 +20,21 @@ end
 service "sync_gateway" do
   provider Chef::Provider::Service::Upstart
   supports :restart => true, :start => true, :stop => true, :reload => true
-  action   :disable
+  action   :stop
+end
+
+if service_name != "sync_gateway"
+  service "sync_gateway" do
+    provider Chef::Provider::Service::Upstart
+    supports :restart => true, :start => true, :stop => true, :reload => true
+    action   :disable
+  end
 end
 
 service "#{service_name}" do
   provider Chef::Provider::Service::Upstart
   supports :restart => true, :start => true, :stop => true, :reload => true
-  action   :nothing
+  action   :enable
 end
 
 template "/etc/init/#{service_name}.conf" do
@@ -56,4 +64,10 @@ directory "#{log_dir}" do
   group 'couchbase'
   mode 0755
   recursive true
+end
+
+service "#{service_name}" do
+  provider Chef::Provider::Service::Upstart
+  supports :restart => true, :start => true, :stop => true, :reload => true
+  action   :start
 end
