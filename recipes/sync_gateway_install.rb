@@ -17,12 +17,6 @@ couchbase_sync_gateway 'self' do
     action     :install
 end
 
-service "#{service_name}" do
-  provider Chef::Provider::Service::Upstart
-  supports :restart => true, :start => true, :stop => true, :reload => true
-  action   :nothing
-end
-
 directory "#{install_dir}/etc" do
   owner 'couchbase'
   group 'couchbase'
@@ -50,5 +44,17 @@ template "/etc/init/#{service_name}.conf" do
     group    "root"
     mode     "0644"
     action   :create
-    notifies :restart, "service[#{service_name}]"
+end
+
+template "#{install_dir}/etc/config.json" do
+    source    'sync_gateway.config_json.erb'
+    variables :config => "{}"
+    action    :create
+end
+
+service "#{service_name}" do
+  supports :restart => true, :start => true, :stop => true, :reload => true
+  action   [:enable, :start]
+  subscribes :restart, resources(:template, "/etc/init/#{service_name}.conf"), :immediately
+  subscribes :restart, resources(:template, "#{install_dir}/etc/config.json"), :immediately
 end
