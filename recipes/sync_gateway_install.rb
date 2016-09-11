@@ -55,6 +55,6 @@ end
 service "#{service_name}" do
   supports :restart => true, :start => true, :stop => true, :reload => true
   action   [:enable, :start]
-  subscribes :restart, resources(:template, "/etc/init/#{service_name}.conf"), :immediately
-  subscribes :restart, resources(:template, "#{install_dir}/etc/config.json"), :immediately
+  subscribes :restart, "template[/etc/init/#{service_name}.conf]", :immediately
+  subscribes :restart, "template[#{install_dir}/etc/config.json]", :immediately
 end
