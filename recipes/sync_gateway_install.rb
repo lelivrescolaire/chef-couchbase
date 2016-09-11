@@ -53,6 +53,7 @@ template "#{install_dir}/etc/config.json" do
 end
 
 service "#{service_name}" do
+  provider Chef::Provider::Service::Upstart
   supports :restart => true, :start => true, :stop => true, :reload => true
   action   [:enable, :start]
   subscribes :restart, "template[/etc/init/#{service_name}.conf]", :immediately
