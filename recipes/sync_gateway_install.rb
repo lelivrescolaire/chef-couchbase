@@ -49,5 +49,5 @@ end
 service "#{service_name}" do
   provider Chef::Provider::Service::Upstart
   supports :restart => true, :start => true, :stop => true, :reload => true
-  action   :start
+  action   :reload
 end
