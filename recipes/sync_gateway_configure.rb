@@ -12,8 +12,14 @@ if node['couchbase']['sync_gateway']['config']['multiple']
     config = config[key]
 end
 
+execute "restart_#{service_name}" do
+  command "service #{service_name} restart"
+  action :nothing
+end
+
 template "#{install_dir}/etc/config.json" do
     source    'sync_gateway.config_json.erb'
     variables :config => Chef::JSONCompat.to_json_pretty(config)
     action    :create
+    notifies :run, "execute[restart_#{service_name}]", :immediately
 end
