@@ -65,9 +65,3 @@ directory "#{log_dir}" do
   mode 0755
   recursive true
 end
-
-service "#{service_name}" do
-  provider Chef::Provider::Service::Upstart
-  supports :restart => true, :start => true, :stop => true, :reload => true
-  action   :restart
-end
