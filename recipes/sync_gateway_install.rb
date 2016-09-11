@@ -17,12 +17,10 @@ couchbase_sync_gateway 'self' do
     action     :install
 end
 
-template "/etc/init/#{service_name}.conf" do
-    source   'sync_gateway.init.d.erb'
-    owner    "root"
-    group    "root"
-    mode     "0644"
-    action   :create
+service "#{service_name}" do
+  provider Chef::Provider::Service::Upstart
+  supports :restart => true, :start => true, :stop => true, :reload => true
+  action   :nothing
 end
 
 directory "#{install_dir}/etc" do
@@ -46,8 +44,11 @@ directory "#{log_dir}" do
   recursive true
 end
 
-service "#{service_name}" do
-  provider Chef::Provider::Service::Upstart
-  supports :restart => true, :start => true, :stop => true, :reload => true
-  action   :reload
+template "/etc/init/#{service_name}.conf" do
+    source   'sync_gateway.init.d.erb'
+    owner    "root"
+    group    "root"
+    mode     "0644"
+    action   :create
+    notifies :reload, 'service[#{service_name}]'
 end
