@@ -50,5 +50,5 @@ template "/etc/init/#{service_name}.conf" do
     group    "root"
     mode     "0644"
     action   :create
-    notifies :reload, "service[#{service_name}]"
+    notifies :restart, "service[#{service_name}]"
 end
