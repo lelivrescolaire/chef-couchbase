@@ -22,5 +22,5 @@ template "#{install_dir}/etc/config.json" do
     source    'sync_gateway.config_json.erb'
     variables :config => Chef::JSONCompat.to_json_pretty(config)
     action    :create
-    notifies :reload, 'service[#{service_name}]'
+    notifies :reload, "service[#{service_name}]"
 end
