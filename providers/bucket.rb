@@ -31,6 +31,7 @@ def create_or_edit(allowEdit = true)
 
     execute "executing #{action}" do
       command cmd
+      ignore_failure true
     end
   end
 end
