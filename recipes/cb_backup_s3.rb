@@ -8,7 +8,7 @@ unless node['couchbase']['backup']['s3']['bucket_name'].nil? || node['couchbase'
     cbBackupCommand = "#{cbBackupCommand} http://localhost:#{node[:couchbase][:port]}"
     cbBackupCommand = "#{cbBackupCommand} $FILE"
 
-    zipCommand = "cd $FILE && zip -r $FILE.zip *"
+    zipCommand = "cd $FILE && zip -9pr $FILE.zip *"
 
     awsCommand = "aws s3 mv --region=#{node[:couchbase][:backup][:s3][:region]}"
     awsCommand = "#{awsCommand} $FILE.zip"
